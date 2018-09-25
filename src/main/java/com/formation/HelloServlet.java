@@ -9,6 +9,7 @@ import java.io.IOException;
 
 /**
  * Hello Servelet
+ * @author  BKA
  */
 @WebServlet("/hello")
 public class HelloServlet extends HttpServlet {
@@ -18,5 +19,6 @@ public class HelloServlet extends HttpServlet {
     protected final void doGet(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/plain");
         resp.getWriter().write("Hello World! Maven Web Project Example.");
+        resp.getWriter().write("Test Parallel Jenkins Build in Pipeline Build.");
     }
 }
