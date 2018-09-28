@@ -4,11 +4,6 @@ pipeline {
         maven 'localMaven'
     }
     stages{
-        stage ('Init'){
-            steps {
-               sh 'mvn --version'
-            }
-        }
         stage ('Build'){
             steps {
                 echo 'Now Building...'
@@ -20,6 +15,31 @@ pipeline {
                  archiveArtifacts artifacts: '**/target/*.war'
               }
             }
+        }
+        stage ('Deploy to staging'){
+           steps{
+              echo 'Now Deploying to staging'
+              build job: 'deploy-to-staging'
+           }
+        }
+        stage ('Deploy to production'){
+           steps{
+              timeout(time:5, unit:'DAYS'){
+                  input message: 'Approve PRODUCTION Deployment?'
+              }
+
+              echo 'Now Deploying to production'
+              build job: 'deploy-to-prod'
+           }
+           post {
+             success {
+               echo 'App deployed to Production.'
+             }
+
+             failure {
+               echo 'Deployment failed.'
+             }
+           }
         }
     }
 }
