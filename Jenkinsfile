@@ -16,6 +16,22 @@ pipeline {
               }
             }
         }
+        stage ('Analyse static'){
+           steps {
+             echo 'Now Checkstyle analyse static'
+             build job: 'heckstyle-analyse-static
+
+             echo 'Now PMD analyse static'
+             build job: 'pmd-analyse-static'
+
+             timeout(time: 3, unit: 'MINUTES') {
+               retry(3) {
+                  echo 'Now FindBug analyse static'
+                  build job: 'findbug-analyse-static'
+               }
+             }
+           }
+        }
         stage ('Deploy to staging'){
            steps{
               echo 'Now Deploying to staging'
