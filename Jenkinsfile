@@ -19,7 +19,7 @@ pipeline {
         stage ('Analyse static'){
            steps {
              echo 'Now Checkstyle analyse static'
-             build job: 'heckstyle-analyse-static
+             build job: 'checkstyle-analyse-static'
 
              echo 'Now PMD analyse static'
              build job: 'pmd-analyse-static'
