@@ -1,5 +1,8 @@
 pipeline {
-    agent { docker { image 'maven:3.3.3' } }
+    agent any
+    tools {
+        maven 'localMaven'
+    }
     stages{
         stage ('Init'){
             steps {
